@@ -2195,10 +2195,10 @@
     (let [->n {:trace 1 :debug 2 :info 3 :warn 4 :error 5 :fatal 6 :report 7}]
       (fn [level] (>= (->n level) (->n *log-level*)))))
 
-  (defn tracef  [fmt & xs] (when (log? :trace)  (logf fmt xs)))
-  (defn debugf  [fmt & xs] (when (log? :debug)  (logf fmt xs)))
-  (defn infof   [fmt & xs] (when (log? :info)   (logf fmt xs)))
-  (defn warnf   [fmt & xs] (when (log? :warn)   (logf fmt xs)))
-  (defn errorf  [fmt & xs] (when (log? :error)  (logf fmt xs)))
-  (defn fatalf  [fmt & xs] (when (log? :fatal)  (logf fmt xs)))
-  (defn reportf [fmt & xs] (when (log? :report) (logf fmt xs))))
+  (defn tracef  [fmt & xs] (when (log? :trace)  (apply logf fmt xs)))
+  (defn debugf  [fmt & xs] (when (log? :debug)  (apply logf fmt xs)))
+  (defn infof   [fmt & xs] (when (log? :info)   (apply logf fmt xs)))
+  (defn warnf   [fmt & xs] (when (log? :warn)   (apply logf (str "WARN: "  fmt) xs)))
+  (defn errorf  [fmt & xs] (when (log? :error)  (apply logf (str "ERROR: " fmt) xs)))
+  (defn fatalf  [fmt & xs] (when (log? :fatal)  (apply logf (str "FATAL: " fmt) xs)))
+  (defn reportf [fmt & xs] (when (log? :report) (apply logf fmt xs))))
